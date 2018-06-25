@@ -1,17 +1,17 @@
 //  MIT License
-//
+//  
 //  Copyright (c) 2018 Jonathan R. Madsen
-//
+//  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and
 //  copies of the Software, and to permit persons to whom the Software is
 //  furnished to do so, subject to the following conditions:
-//
+//  
 //  The above copyright notice and this permission notice shall be included in all
 //  copies or substantial portions of the Software.
-//
+//  
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,34 +20,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#include "globals.hpp"
 #include "device.hpp"
 
 //============================================================================//
 
-void message(device_t device, const std::string& append = "")
+device::device(int _device_num)
+: m_device(get_selection(_device_num))
 {
-    // print the device's name
-    std::cout << "--> hello from \"" << device.name() << "\"";
-    if(append.length() > 0)
-        std::cout << " " << append;
-    std::cout << " (platform: " << device.platform().name() << ")";
-    std::cout << std::endl;
+    get_device() = m_device;
 }
 
 //============================================================================//
 
-int main()
+device::device(device_t _device)
+: m_device(_device)
 {
-    for(auto device : boost::compute::system::devices())
-        message(device);
-
-    device _device;
-
-    // print the default device
-    message(_device, "[default device]");
-
-    return 0;
+    get_device() = m_device;
 }
 
 //============================================================================//
+
+device::~device()
+{  }
+
+//============================================================================//
+
+
