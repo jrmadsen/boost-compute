@@ -2,10 +2,13 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
 project(UsingBoostCompute LANGUAGES C CXX VERSION 0.0.1)
 
-find_package(BoostCompute REQUIRED)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules ${CMAKE_MODULE_PATH})
+
 find_package(Boost 1.54 REQUIRED)
 find_package(OpenCL REQUIRED)
 find_package(TiMemory REQUIRED)
+
+include(MacroUtilities)
 
 #------------------------------------------------------------------------------#
 
@@ -21,7 +24,6 @@ endfunction(found_message PACKAGE_NAME)
 #------------------------------------------------------------------------------#
 
 found_message(Boost)
-found_message(BoostCompute)
 found_message(OpenCL)
 found_message(TiMemory)
 
@@ -29,8 +31,12 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
+checkout_submodule(RECURSIVE
+    RELATIVE_PATH boost-compute
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/source)
+
 include_directories(
-    SYSTEM ${BoostCompute_INCLUDE_DIRS}
+    SYSTEM ${PROJECT_SOURCE_DIR}/source/boost-compute/include
     SYSTEM ${OpenCL_INCLUDE_DIRS}
     SYSTEM ${Boost_INCLUDE_DIRS}
     ${TiMemory_INCLUDE_DIRS}

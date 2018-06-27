@@ -1,0 +1,3 @@
+[submodule "source/boost-compute"]
+	path = source/boost-compute
+	url = https://github.com/boostorg/compute.git
